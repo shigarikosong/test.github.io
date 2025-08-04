@@ -295,14 +295,17 @@ section {
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">
       ✖
     </button>
+
+    <button
+  onclick="togglePlayerSize()"
+  class="absolute top-10 right-1 p-1 text-sm bg-gray-200 hover:bg-gray-300 rounded shadow"
+>
+  サイズ切替
+</button>
     
     <div class="bg-black rounded-xl overflow-hidden shadow-lg" style="position: relative;">
       <iframe id="playerIframe" class="w-full aspect-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-   <div class="absolute bottom-2 right-2">
-  <button onclick="togglePlayerSize()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm rounded shadow">
-    サイズ切替
-  </button>
-</div>
+      
     </div>
   </div>
 </div>
@@ -659,6 +662,8 @@ const playerSizes = [
 function togglePlayerSize() {
   const iframe = document.getElementById('playerIframe');
   if (!iframe) return;
+
+  iframe.classList.remove("aspect-video");
 
   const size = playerSizes[playerSizeIndex];
   iframe.style.width = size.width;
