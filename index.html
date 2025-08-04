@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しssがりsこのうた。｜司賀りこ非公式ファンサイト</title>
+  <title>しssssがりsこのうた。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -166,6 +166,19 @@ section {
   width: 100%;
   height: auto;
 }
+
+    /* 縮小時、ボタンを左上に寄せる */
+#fixedPlayer.player-small #closePlayerBtn {
+  right: auto;
+  left: 0.5rem;
+}
+
+#fixedPlayer.player-small [onclick="togglePlayerSize()"] {
+  right: auto;
+  left: 0.5rem;
+  top: 3rem; /* ✖ボタンとの重なりを避ける */
+}
+
 
 
 #nowPlayingWrapper {
