@@ -298,22 +298,25 @@ section {
 
     <button
   onclick="togglePlayerSize()"
-  class="absolute top-10 right-1 p-1 text-sm bg-gray-200 hover:bg-gray-300 rounded shadow"
+  class="absolute top-10 right-0 p-1 text-sm bg-gray-200 hover:bg-gray-300 rounded shadow z-10"
 >
   サイズ切替
 </button>
     
-    <div class="bg-black rounded-xl overflow-hidden shadow-lg" style="position: relative;">
-      <iframe id="playerIframe" class="w-full aspect-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      
-    </div>
+<div class="bg-black rounded-xl shadow-lg w-fit" style="position: relative;">
+  <iframe id="playerIframe" ...></iframe>
+</div>
+
   </div>
 </div>
 
   <template id="videoPlayerTemplate">
-    <div class="video-player-container w-full mt-4 fade-in">
-      <div class="bg-black rounded-xl overflow-hidden shadow-lg" style="position: relative;">
-    <iframe class="" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>    
+    
+<div class="bg-black rounded-xl shadow-lg w-fit" style="position: relative;">
+  <iframe class="" ...></iframe>
+  <!-- サイズ切替ボタンもここにあるなら位置調整必要 -->
+</div>
+        
     <div class="absolute bottom-2 right-2">
   <button onclick="togglePlayerSize()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm rounded shadow">
     サイズ切替
