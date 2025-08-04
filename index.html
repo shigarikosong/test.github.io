@@ -296,26 +296,28 @@ section {
       ✖
     </button>
     
-    <div class="bg-black rounded-xl overflow-hidden shadow-lg">
+    <div class="bg-black rounded-xl overflow-hidden shadow-lg" style="position: relative;">
       <iframe id="playerIframe" class="w-full aspect-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   <div class="absolute bottom-2 right-2">
+  <button onclick="togglePlayerSize()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm rounded shadow">
+    サイズ切替
+  </button>
+</div>
     </div>
   </div>
 </div>
 
-
-
-
-
   <template id="videoPlayerTemplate">
     <div class="video-player-container w-full mt-4 fade-in">
-      <div class="bg-black rounded-xl overflow-hidden shadow-lg">
+      <div class="bg-black rounded-xl overflow-hidden shadow-lg" style="position: relative;">
     <iframe class="" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>    
-    </div>
+    <div class="absolute bottom-2 right-2">
+  <button onclick="togglePlayerSize()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm rounded shadow">
+    サイズ切替
+  </button>
+</div>
+      </div>
   </template>
-
-
-
-  
   
   <script>
     
@@ -646,6 +648,24 @@ function playAdjacentVideo(direction) {
     loadVideo(currentFilteredVideos[newIndex], null);
     }
     }
+
+    let playerSizeIndex = 0;
+const playerSizes = [
+  { width: "960px", height: "540px" }, // 大
+  { width: "640px", height: "360px" }, // 中
+  { width: "320px", height: "180px" }  // 小
+];
+
+function togglePlayerSize() {
+  const iframe = document.getElementById('playerIframe');
+  if (!iframe) return;
+
+  const size = playerSizes[playerSizeIndex];
+  iframe.style.width = size.width;
+  iframe.style.height = size.height;
+
+  playerSizeIndex = (playerSizeIndex + 1) % playerSizes.length;
+}
 
   </script>
 </body>
