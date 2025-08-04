@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しssがりこのうた。｜司賀りこ非公式ファンサイト</title>
+  <title>しssがりsこのうた。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -324,7 +324,8 @@ section {
       サイズ切替
     </button>
 
-    <div id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block w-fit h-fit" style="position: relative;">
+<div id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block w-fit h-fit ml-auto mr-auto" style="position: relative;">
+
       <iframe id="playerIframe" class="w-full h-auto" ...></iframe>
     </div>
   </div>
@@ -598,9 +599,16 @@ function loadVideo(video, item) {
   //fixedPlayer.style.bottom = `${nowPlayingWrapper.offsetHeight}px`;
 
   
-  if (platform.toLowerCase().includes("youtube")) {
+if (platform.toLowerCase().includes("youtube")) {
   iframe.className = "w-full";
-} else if (platform.toLowerCase() === "tiktok") {
+  iframe.style.width = "";
+  iframe.style.height = "";
+  const wrapper = document.getElementById('videoWrapper');
+  wrapper.classList.remove("mr-auto");
+  wrapper.classList.add("ml-auto", "mr-auto"); // 中央寄せに戻す
+  playerSizeIndex = 0; // サイズ切替をリセット
+}
+ else if (platform.toLowerCase() === "tiktok") {
   iframe.className =  "w-full max-w-xs h-[45vh] sm:h-[550px] mx-auto";
 }
 
@@ -672,26 +680,34 @@ function playAdjacentVideo(direction) {
     }
     }
 
-    let playerSizeIndex = 0;
+let playerSizeIndex = 0;
 const playerSizes = [
-  { width: "960px", height: "540px" }, // 大
-  { width: "640px", height: "360px" }, // 中
-  { width: "320px", height: "180px" }  // 小
+  "full", // 初期：幅いっぱい（中央寄せ）
+  { width: "960px", height: "540px" }, // 中：左寄せ
+  { width: "640px", height: "360px" }  // 小：左寄せ
 ];
 
 function togglePlayerSize() {
   const iframe = document.getElementById('playerIframe');
-  if (!iframe) return;
+  const wrapper = document.getElementById('videoWrapper');
+  if (!iframe || !wrapper) return;
 
-  iframe.classList.remove("aspect-video");
-  iframe.style.display = "block";
-
-  const size = playerSizes[playerSizeIndex];
-  iframe.style.width = size.width;
-  iframe.style.height = size.height;
+  if (playerSizeIndex === 0) {
+    // 初期状態 → 中サイズ（左寄せ）
+    iframe.className = ""; // w-full 解除
+    wrapper.classList.remove("ml-auto", "mr-auto");
+    wrapper.classList.add("mr-auto"); // 左寄せ
+    iframe.style.width = playerSizes[1].width;
+    iframe.style.height = playerSizes[1].height;
+  } else {
+    const size = playerSizes[playerSizeIndex];
+    iframe.style.width = size.width;
+    iframe.style.height = size.height;
+  }
 
   playerSizeIndex = (playerSizeIndex + 1) % playerSizes.length;
 }
+
 
   </script>
 </body>
