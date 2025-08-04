@@ -132,6 +132,12 @@ section {
   padding-bottom: 8px; /* ← 必要に応じて増やして調整 */
 }
 
+    #fixedPlayer iframe {
+  display: block;
+  max-height: 80vh;
+  margin: 0 auto;
+}
+
 
 #nowPlayingWrapper {
   background-color: #e0f2fe;
@@ -582,7 +588,7 @@ function loadVideo(video, item) {
 
   
   if (platform.toLowerCase().includes("youtube")) {
-  iframe.className = "w-full aspect-video";
+  iframe.className = "w-full";
 } else if (platform.toLowerCase() === "tiktok") {
   iframe.className =  "w-full max-w-xs h-[45vh] sm:h-[550px] mx-auto";
 }
@@ -667,6 +673,7 @@ function togglePlayerSize() {
   if (!iframe) return;
 
   iframe.classList.remove("aspect-video");
+  iframe.style.display = "block";
 
   const size = playerSizes[playerSizeIndex];
   iframe.style.width = size.width;
