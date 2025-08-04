@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しsssがりsこのうた。｜司賀りこ非公式ファンサイト</title>
+  <title>しssがりsこのうた。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -147,6 +147,26 @@ section {
   display: block;
 }
 
+    /* サイズ切替（縮小）時のプレイヤーを左寄せ＆右余白ゼロにする */
+#fixedPlayer.player-small {
+  justify-content: start; /* 左寄せ */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#fixedPlayer.player-small #playerContainer {
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 640px; /* プレイヤー最大幅 */
+}
+
+#fixedPlayer.player-small iframe {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: auto;
+}
+
 
 #nowPlayingWrapper {
   background-color: #e0f2fe;
@@ -160,13 +180,15 @@ section {
   border-left: 4px solid #facc15; /* アクセントライン */
 }
 
-    #videoWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0 auto;
+#videoWrapper {
+  background-color: black;
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  width: 100%;
+  height: auto;
+  position: relative;
 }
+
 
 
 
@@ -305,15 +327,16 @@ section {
     <span id="nowPlayingTitle">再生中</span>
   </div>
   
-  <div id="playerControls" class="flex justify-center gap-2 py-2">
-    <button id="prevVideoBtn" class="bg-gray-300 px-3 py-1 rounded">◀ 戻る</button>
-    <button id="nextVideoBtn" class="bg-gray-300 px-3 py-1 rounded">▶ 次へ</button>
-    <button id="randomFromFilteredBtn" class="bg-gray-300 px-3 py-1 rounded">🎲 ランダム</button>
-  </div>
+<div id="playerControls" class="flex justify-start gap-2 py-2 px-4">
+  <button id="prevVideoBtn" ...>◀ 戻る</button>
+  <button id="nextVideoBtn" ...>▶ 次へ</button>
+  <button id="randomFromFilteredBtn" ...>🎲 ランダム</button>
 </div>
 
+
 <div id="fixedPlayer" class="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg z-20">
-  <div id="playerContainer" class="pt-4 pr-4 pl-4 pb-0 relative w-fit h-fit">
+  <div id="playerContainer" class="bg-black rounded-xl shadow-lg inline-block w-fit" style="position: relative;">
+
 
     <!-- ✖ボタン -->
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">
@@ -325,10 +348,10 @@ section {
       サイズ切替
     </button>
 
-<div id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block w-fit h-fit ml-auto mr-auto" style="position: relative;">
+<div id="videoWrapper" class="bg-black rounded-xl shadow-lg w-full h-auto" style="position: relative;">
+  <iframe id="playerIframe" class="w-full h-auto"></iframe>
+</div>
 
-      <iframe id="playerIframe" class="w-full h-auto" ...></iframe>
-    </div>
   </div>
 </div>
 
