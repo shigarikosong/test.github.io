@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうた。｜司賀りこ非公式ファンサイト</title>
+  <title>しsがりこのうた。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -159,6 +159,15 @@ section {
   background-color: #fffbe6; /* ハイライト色 */
   border-left: 4px solid #facc15; /* アクセントライン */
 }
+
+    #videoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+}
+
 
 
   </style>
@@ -318,7 +327,7 @@ section {
   サイズ切替
 </button>
     
-<div class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
+<div  id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
   <iframe id="playerIframe" ...></iframe>
 </div>
 
@@ -327,7 +336,7 @@ section {
 
   <template id="videoPlayerTemplate">
     
-<div class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
+<div  id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
   <iframe class="" ...></iframe>
   <!-- サイズ切替ボタンもここにあるなら位置調整必要 -->
 </div>
