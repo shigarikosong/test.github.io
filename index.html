@@ -290,7 +290,7 @@ section {
 
 <!-- 固定プレイヤー -->
 <div id="fixedPlayer" class="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg z-20">
-  <div class="max-w-4xl mx-auto p-4 relative">
+  <div class="max-w-4xl mx-auto pt-4 pr-4 pl-4 pb-0 relative">
     <!-- ✖ボタンを追加 -->
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">
       ✖
@@ -303,7 +303,7 @@ section {
   サイズ切替
 </button>
     
-<div class="bg-black rounded-xl shadow-lg w-fit" style="position: relative;">
+<div class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
   <iframe id="playerIframe" ...></iframe>
 </div>
 
@@ -312,7 +312,7 @@ section {
 
   <template id="videoPlayerTemplate">
     
-<div class="bg-black rounded-xl shadow-lg w-fit" style="position: relative;">
+<div class="bg-black rounded-xl shadow-lg inline-block" style="position: relative;">
   <iframe class="" ...></iframe>
   <!-- サイズ切替ボタンもここにあるなら位置調整必要 -->
 </div>
