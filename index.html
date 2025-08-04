@@ -313,7 +313,8 @@ section {
 </div>
 
 <div id="fixedPlayer" class="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg z-20">
-  <div class="max-w-4xl mx-auto pt-4 pr-4 pl-4 pb-0 relative w-fit h-fit">
+  <div id="playerContainer" class="pt-4 pr-4 pl-4 pb-0 relative w-fit h-fit">
+
     <!-- ✖ボタン -->
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">
       ✖
@@ -603,11 +604,18 @@ if (platform.toLowerCase().includes("youtube")) {
   iframe.className = "w-full";
   iframe.style.width = "";
   iframe.style.height = "";
+
   const wrapper = document.getElementById('videoWrapper');
+  const container = document.getElementById('playerContainer');
+
   wrapper.classList.remove("mr-auto");
   wrapper.classList.add("ml-auto", "mr-auto"); // 中央寄せに戻す
-  playerSizeIndex = 0; // サイズ切替をリセット
+
+  if (container) container.classList.add("mx-auto"); // ← 親も中央に戻す
+
+  playerSizeIndex = 0; // サイズ切替リセット
 }
+
  else if (platform.toLowerCase() === "tiktok") {
   iframe.className =  "w-full max-w-xs h-[45vh] sm:h-[550px] mx-auto";
 }
@@ -690,15 +698,19 @@ const playerSizes = [
 function togglePlayerSize() {
   const iframe = document.getElementById('playerIframe');
   const wrapper = document.getElementById('videoWrapper');
-  if (!iframe || !wrapper) return;
+  const container = document.getElementById('playerContainer');
+  if (!iframe || !wrapper || !container) return;
 
   if (playerSizeIndex === 0) {
     // 初期状態 → 中サイズ（左寄せ）
     iframe.className = ""; // w-full 解除
-    wrapper.classList.remove("ml-auto", "mr-auto");
-    wrapper.classList.add("mr-auto"); // 左寄せ
     iframe.style.width = playerSizes[1].width;
     iframe.style.height = playerSizes[1].height;
+
+    wrapper.classList.remove("ml-auto", "mr-auto");
+    wrapper.classList.add("mr-auto");
+
+    container.classList.remove("mx-auto");
   } else {
     const size = playerSizes[playerSizeIndex];
     iframe.style.width = size.width;
@@ -707,6 +719,7 @@ function togglePlayerSize() {
 
   playerSizeIndex = (playerSizeIndex + 1) % playerSizes.length;
 }
+
 
 
   </script>
