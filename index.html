@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうたss。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうたs。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -563,20 +563,27 @@ function renderVideoList(videos) {
 function loadVideo(video, item) {
   const start = parseInt(video["start"] || '0');
   let videoId = video["videoId"];
-  const platform = video["platform"];
-  let embedUrl = "";
+  
+  let platform = video["platform"];
+if (typeof platform !== "string" || platform.trim() === "") {
+  alert("platform が未指定のため再生できません");
+  return;
+}
+platform = platform.toLowerCase();
 
-  if (!videoId) return alert("videoId が指定されていません");
+if (platform.includes("youtube")) {
+  const match = videoId.match(/(?:v=|\/|youtu\.be\/)?([0-9A-Za-z_-]{11})/);
+  if (match) videoId = match[1];
+  embedUrl = `https://www.youtube.com/embed/${videoId}?start=${start}&autoplay=1&enablejsapi=1`;
+} else if (platform === "tiktok") {
+  const match = videoId.match(/video\/(\d+)/);
+  const tiktokId = match ? match[1] : videoId;
+  embedUrl = `https://www.tiktok.com/embed/v2/${tiktokId}`;
+} else {
+  alert(`未対応の platform: ${platform}`);
+  return;
+}
 
-  if (platform.toLowerCase().includes("youtube")) {
-    const match = videoId.match(/(?:v=|\/|youtu\.be\/)?([0-9A-Za-z_-]{11})/);
-    if (match) videoId = match[1];
-    embedUrl = `https://www.youtube.com/embed/${videoId}?start=${start}&autoplay=1&enablejsapi=1`;
-  } else if (platform.toLowerCase() === "tiktok") {
-    const match = videoId.match(/video\/(\d+)/);
-    const tiktokId = match ? match[1] : videoId;
-    embedUrl = `https://www.tiktok.com/embed/v2/${tiktokId}`;
-  }
 
   // 固定プレイヤーに動画を設定
   const fixedPlayer = document.getElementById('fixedPlayer');
