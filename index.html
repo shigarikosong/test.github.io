@@ -388,11 +388,11 @@ sortOrder.value = document.getElementById('modalSortOrder').value;
           sets.role.add(v["担当区分"]);
 
             // 公開月（例: 2023/07）だけ抽出して追加
-  const rawDate = v["公開月"];
-  if (rawDate && /^\d{4}[-\/]\d{2}/.test(rawDate)) {
-    const month = rawDate.slice(0, 7).replace('-', '/'); // "YYYY/MM"
-    sets.date.add(month);
-  }
+const rawDate = v["公開月"];
+if (typeof rawDate === "string" && /^\d{4}[-\/]\d{2}/.test(rawDate)) {
+  const month = rawDate.slice(0, 7).replace('-', '/'); // "YYYY/MM"
+  sets.date.add(month);
+}
         });
 
         addOptions(categoryFilter, [...sets.category].sort());
@@ -449,7 +449,11 @@ if (mobileRandomPlayButton) {
       function applyFilters() {
         let filtered = allVideos.filter(video => {
           return (!categoryFilter.value || video["カテゴリ"] === categoryFilter.value) &&
-                 (!dateFilter.value || video["公開月"].slice(0, 7).replace('-', '/') === dateFilter.value) &&
+                 (!dateFilter.value || (
+  typeof video["公開月"] === "string" &&
+  video["公開月"].slice(0, 7).replace('-', '/') === dateFilter.value
+))
+ &&
                  (!typeFilter.value || video["動画種別"] === typeFilter.value) &&
                  (!roleFilter.value || video["担当区分"] === roleFilter.value) &&
                  (!searchInput.value ||
@@ -459,9 +463,14 @@ if (mobileRandomPlayButton) {
 
 filtered.sort((a, b) => {
   if (sortOrder.value === "asc" || sortOrder.value === "desc") {
-    const dateA = new Date(a["公開月"]);
-    const dateB = new Date(b["公開月"]);
-    return sortOrder.value === "asc" ? dateA - dateB : dateB - dateA;
+  const dateA = Date.parse(
+    typeof a["公開月"] === "string" ? a["公開月"].replace('/', '-') + "-01" : ""
+  ) || 0;
+  const dateB = Date.parse(
+    typeof b["公開月"] === "string" ? b["公開月"].replace('/', '-') + "-01" : ""
+  ) || 0;
+  return sortOrder.value === "asc" ? dateA - dateB : dateB - dateA;
+}
   } else if (sortOrder.value === "title") {
     return a["title"].localeCompare(b["title"], 'ja');
   } else if (sortOrder.value === "artist") {
