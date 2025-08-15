@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうたs。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうたss。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -461,22 +461,28 @@ if (mobileRandomPlayButton) {
                   video["artist"].toLowerCase().includes(searchInput.value.toLowerCase()));
         });
 
+const coll = new Intl.Collator('ja');
+
 filtered.sort((a, b) => {
-  if (sortOrder.value === "asc" || sortOrder.value === "desc") {
-  const dateA = Date.parse(
-    typeof a["公開月"] === "string" ? a["公開月"].replace('/', '-') + "-01" : ""
-  ) || 0;
-  const dateB = Date.parse(
-    typeof b["公開月"] === "string" ? b["公開月"].replace('/', '-') + "-01" : ""
-  ) || 0;
-  return sortOrder.value === "asc" ? dateA - dateB : dateB - dateA;
-}
-  } else if (sortOrder.value === "title") {
-    return a["title"].localeCompare(b["title"], 'ja');
-  } else if (sortOrder.value === "artist") {
-    return a["artist"].localeCompare(b["artist"], 'ja');
+  const order = sortOrder.value;
+
+  if (order === "asc" || order === "desc") {
+    const dateA = Date.parse(
+      typeof a["公開月"] === "string" ? a["公開月"].replace('/', '-') + "-01" : ""
+    ) || 0;
+    const dateB = Date.parse(
+      typeof b["公開月"] === "string" ? b["公開月"].replace('/', '-') + "-01" : ""
+    ) || 0;
+    return order === "asc" ? dateA - dateB : dateB - dateA;
+  } else if (order === "title") {
+    return coll.compare(String(a["title"] || ""), String(b["title"] || ""));
+  } else if (order === "artist") {
+    return coll.compare(String(a["artist"] || ""), String(b["artist"] || ""));
+  } else {
+    return 0;
   }
 });
+
 
         renderVideoList(filtered);
         currentFilteredVideos = filtered;
