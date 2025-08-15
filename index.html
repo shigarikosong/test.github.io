@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりsこのうた。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうた。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -132,54 +132,6 @@ section {
   padding-bottom: 8px; /* ← 必要に応じて増やして調整 */
 }
 
-    #fixedPlayer iframe {
-  display: block;
-  max-height: 80vh;
-  margin: 0 auto;
-}
-
-    #fixedPlayer {
-  padding-bottom: 0 !important;
-}
-
-#fixedPlayer iframe {
-  margin-bottom: 0 !important;
-  display: block;
-}
-
-    /* サイズ切替（縮小）時のプレイヤーを左寄せ＆右余白ゼロにする */
-#fixedPlayer.player-small {
-  justify-content: start; /* 左寄せ */
-  padding-left: 0;
-  padding-right: 0;
-}
-
-#fixedPlayer.player-small #playerContainer {
-  margin-left: 0;
-  margin-right: auto;
-  max-width: 640px; /* プレイヤー最大幅 */
-}
-
-#fixedPlayer.player-small iframe {
-  display: block;
-  margin: 0;
-  width: 100%;
-  height: auto;
-}
-
-    /* 縮小時、ボタンを左上に寄せる */
-#fixedPlayer.player-small #closePlayerBtn {
-  right: auto;
-  left: 0.5rem;
-}
-
-#fixedPlayer.player-small [onclick="togglePlayerSize()"] {
-  right: auto;
-  left: 0.5rem;
-  top: 3rem; /* ✖ボタンとの重なりを避ける */
-}
-
-
 
 #nowPlayingWrapper {
   background-color: #e0f2fe;
@@ -193,20 +145,6 @@ section {
   border-left: 4px solid #facc15; /* アクセントライン */
 }
 
-#videoWrapper {
-  background-color: black;
-  border-radius: 0.75rem; /* rounded-xl */
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
-  width: 100%;
-  height: auto;
-  position: relative;
-}
-
-#fixedPlayer.player-small #playerControls {
-  justify-content: flex-start; /* 左寄せ */
-  padding-left: 1rem;          /* 左に余白を少しつける（調整可） */
-  padding-right: 0;            /* 右の余白をなくす */
-}
 
   </style>
 </head>
@@ -230,7 +168,7 @@ section {
 </header>
 
   <div class="max-w-4xl mx-auto px-4 mt-4 text-center text-sm text-gray-600">
-  にじさんじ所属 司s賀りこさんの歌ってみたや歌枠などをまとめた非公式ファンアーカイブです。<br>
+  にじさんじ所属 司賀りこさんの歌ってみたや歌枠などをまとめた非公式ファンアーカイブです。<br>
   Youtube(歌ってみた、shorts、歌枠) / tiktok を掲載しています。<br>
   tiktokのみ、仕様上youtubeに比べると再生音が大きい為、ご注意ください。<br>
 </div>
@@ -343,45 +281,41 @@ section {
     <span id="nowPlayingTitle">再生中</span>
   </div>
   
-<div id="playerControls" class="flex justify-start gap-2 py-2 px-4">
-  <button id="prevVideoBtn" ...>◀ 戻る</button>
-  <button id="nextVideoBtn" ...>▶ 次へ</button>
-  <button id="randomFromFilteredBtn" ...>🎲 ランダム</button>
+  <div id="playerControls" class="flex justify-center gap-2 py-2">
+    <button id="prevVideoBtn" class="bg-gray-300 px-3 py-1 rounded">◀ 戻る</button>
+    <button id="nextVideoBtn" class="bg-gray-300 px-3 py-1 rounded">▶ 次へ</button>
+    <button id="randomFromFilteredBtn" class="bg-gray-300 px-3 py-1 rounded">🎲 ランダム</button>
+  </div>
 </div>
 
-
+<!-- 固定プレイヤー -->
 <div id="fixedPlayer" class="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg z-20">
-  <div id="playerContainer" class="bg-black rounded-xl shadow-lg inline-block w-fit" style="position: relative;">
-
-
-    <!-- ✖ボタン -->
+  <div class="max-w-4xl mx-auto p-4 relative">
+    <!-- ✖ボタンを追加 -->
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">
       ✖
     </button>
-
-    <!-- サイズ切り替え -->
-    <button onclick="togglePlayerSize()" class="absolute top-10 right-0 p-1 text-sm bg-gray-200 hover:bg-gray-300 rounded shadow z-10">
-      サイズ切替
-    </button>
-
-<div id="videoWrapper" class="bg-black rounded-xl shadow-lg w-full h-auto" style="position: relative;">
-  <iframe id="playerIframe" class="w-full h-auto"></iframe>
-</div>
-
+    
+    <div class="bg-black rounded-xl overflow-hidden shadow-lg">
+      <iframe id="playerIframe" class="w-full aspect-video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
-<template id="videoPlayerTemplate">
-  <div id="videoWrapper" class="bg-black rounded-xl shadow-lg inline-block w-fit h-fit" style="position: relative;">
-    <iframe class="w-full h-auto" ...></iframe>
-  </div>
-  <div class="absolute bottom-2 right-2">
-    <button onclick="togglePlayerSize()" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-sm rounded shadow">
-      サイズ切替
-    </button>
-  </div>
-</template>
 
+
+
+
+  <template id="videoPlayerTemplate">
+    <div class="video-player-container w-full mt-4 fade-in">
+      <div class="bg-black rounded-xl overflow-hidden shadow-lg">
+    <iframe class="" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>    
+    </div>
+  </template>
+
+
+
+  
   
   <script>
     
@@ -636,26 +570,12 @@ function loadVideo(video, item) {
   fixedPlayer.style.display = 'block'; // プレイヤーを表示
 
   const nowPlayingWrapper = document.getElementById('nowPlayingWrapper');
-  //fixedPlayer.style.bottom = `${nowPlayingWrapper.offsetHeight}px`;
+  fixedPlayer.style.bottom = `${nowPlayingWrapper.offsetHeight}px`;
 
   
-if (platform.toLowerCase().includes("youtube")) {
-  iframe.className = "w-full";
-  iframe.style.width = "";
-  iframe.style.height = "";
-
-  const wrapper = document.getElementById('videoWrapper');
-  const container = document.getElementById('playerContainer');
-
-  wrapper.classList.remove("mr-auto");
-  wrapper.classList.add("ml-auto", "mr-auto"); // 中央寄せに戻す
-
-  if (container) container.classList.add("mx-auto"); // ← 親も中央に戻す
-
-  playerSizeIndex = 0; // サイズ切替リセット
-}
-
- else if (platform.toLowerCase() === "tiktok") {
+  if (platform.toLowerCase().includes("youtube")) {
+  iframe.className = "w-full aspect-video";
+} else if (platform.toLowerCase() === "tiktok") {
   iframe.className =  "w-full max-w-xs h-[45vh] sm:h-[550px] mx-auto";
 }
 
@@ -668,27 +588,29 @@ if (platform.toLowerCase().includes("youtube")) {
   // プレイヤーを表示する位置を調整
   const nowPlaying = document.getElementById('nowPlaying');
 
-  // ✖ボタンをクリックした時の処理
-  document.getElementById('closePlayerBtn').addEventListener('click', () => {
-    // プレイヤーを非表示にする
-    fixedPlayer.style.display = 'none'; // プレイヤーを非表示
-
-
-
-    
-    // 動画の再生を停止する（YouTubeの場合）
-    const iframe = document.getElementById('playerIframe');
-    if (platform.toLowerCase().includes("youtube")) {
-  iframe.contentWindow?.postMessage(JSON.stringify({
-    event: 'command',
-    func: 'pauseVideo',
-    args: []
-  }), '*');
-} else {
-  iframe.src = "";
-}
-  }); // ここで addEventListener の閉じ括弧
 } // ここで loadVideo 関数の閉じ括弧
+
+    const closeBtn = document.getElementById('closePlayerBtn');
+const fixedPlayer = document.getElementById('fixedPlayer');
+const iframe = document.getElementById('playerIframe');
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    // YouTube の場合は pauseVideo
+    if (iframe.src.includes("youtube.com")) {
+      iframe.contentWindow?.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'pauseVideo',
+        args: []
+      }), '*');
+    } else {
+      // TikTok などは src をクリアして停止
+      iframe.src = "";
+    }
+    fixedPlayer.style.display = 'none';
+  });
+}
+
 
   // 古い埋め込みプレイヤーを削除（固定プレイヤーを使うので他のプレイヤーは削除）
   document.querySelectorAll('.video-player-container').forEach(el => el.remove());
@@ -726,40 +648,6 @@ function playAdjacentVideo(direction) {
     loadVideo(currentFilteredVideos[newIndex], null);
     }
     }
-
-let playerSizeIndex = 0;
-const playerSizes = [
-  "full", // 初期：幅いっぱい（中央寄せ）
-  { width: "960px", height: "540px" }, // 中：左寄せ
-  { width: "640px", height: "360px" }  // 小：左寄せ
-];
-
-function togglePlayerSize() {
-  const iframe = document.getElementById('playerIframe');
-  const wrapper = document.getElementById('videoWrapper');
-  const container = document.getElementById('playerContainer');
-  if (!iframe || !wrapper || !container) return;
-
-  if (playerSizeIndex === 0) {
-    // 初期状態 → 中サイズ（左寄せ）
-    iframe.className = ""; // w-full 解除
-    iframe.style.width = playerSizes[1].width;
-    iframe.style.height = playerSizes[1].height;
-
-    wrapper.classList.remove("ml-auto", "mr-auto");
-    wrapper.classList.add("mr-auto");
-
-    container.classList.remove("mx-auto");
-  } else {
-    const size = playerSizes[playerSizeIndex];
-    iframe.style.width = size.width;
-    iframe.style.height = size.height;
-  }
-
-  playerSizeIndex = (playerSizeIndex + 1) % playerSizes.length;
-}
-
-
 
   </script>
 </body>
