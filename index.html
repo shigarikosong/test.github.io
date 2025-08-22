@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうたs。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうたsw。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -264,6 +264,8 @@ section {
   <!-- 検索ボックス：広がる -->
   <input id="searchInput" type="text" placeholder="曲名・アーティスト"
     class="flex-1 min-w-[220px] rounded-md border border-gray-300 px-3 h-10 text-sm focus:ring-blue-300 transition">
+
+  <div id="songCount" class="mt-2 text-sm text-gray-700 text-right"></div>
 
   <!-- 並び順：固定幅 -->
   <select id="sortOrder"
@@ -947,6 +949,25 @@ function initFilterBar(){
 
   // 外側クリックで全部閉じる
   document.addEventListener('click', closeAll);
+}
+
+    function renderVideoList(videos) {
+  videoList.innerHTML = '';
+
+  const countElement = document.getElementById('songCount');
+  if (countElement) {
+    countElement.textContent = `${allVideos.length}曲中 ${videos.length}曲表示中`;
+  }
+  ...
+}
+
+function render(list){
+  renderVideoList(list);
+  currentFilteredVideos = list;
+  const countElement = document.getElementById('songCount');
+  if (countElement) {
+    countElement.textContent = `${allVideos.length}曲中 ${list.length}曲表示中`;
+  }
 }
 
 
