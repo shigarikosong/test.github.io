@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうたss。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうたs。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -154,7 +154,9 @@ section {
   cursor: ns-resize;
   z-index: 5;
   background: transparent;
+  touch-action: none; 
 }
+    
 #playerResizeHandle::after {
   content: "";
   position: absolute;
@@ -170,8 +172,9 @@ section {
 
   </style>
 
-  
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
+  
 <body style="background-color: #FFE36C;" class="text-gray-800">
   <header class="relative border-b z-10 bg-white/90 backdrop-blur px-4 py-3 shadow-sm">
   <h1 class="text-left text-xl sm:text-2xl font-semibold text-gray-900 tracking-tight">
@@ -209,19 +212,32 @@ section {
   </button>
 </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-      <select id="categoryFilter" class="hidden sm:block rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
-        <option value="">カテゴリ</option>
-      </select>
-      <select id="dateFilter" class="hidden sm:block rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
-        <option value="">公開日</option>
-      </select>
-      <select id="typeFilter" class="hidden sm:block rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
-        <option value="">動画種別</option>
-      </select>
-      <select id="roleFilter" class="hidden sm:block rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
-        <option value="">担当区分</option>
-      </select>
+ <div id="filters" class="grid md:grid-cols-4 gap-3">
+   <!-- カテゴリ -->
+   <fieldset class="bg-white rounded-lg border p-3">
+     <legend class="text-sm font-medium mb-2">カテゴリ</legend>
+     <div class="space-y-1" data-group="category"></div>
+   </fieldset>
+
+   <!-- 公開月 -->
+   <fieldset class="bg-white rounded-lg border p-3">
+     <legend class="text-sm font-medium mb-2">公開日</legend>
+     <div class="space-y-1" data-group="month"></div>
+   </fieldset>
+
+   <!-- 動画種別 -->
+   <fieldset class="bg-white rounded-lg border p-3">
+     <legend class="text-sm font-medium mb-2">動画種別</legend>
+     <div class="space-y-1" data-group="videoType"></div>
+   </fieldset>
+
+   <!-- 担当区分 -->
+   <fieldset class="bg-white rounded-lg border p-3">
+     <legend class="text-sm font-medium mb-2">担当区分</legend>
+     <div class="space-y-1" data-group="role"></div>
+   </fieldset>
+ </div>
+    
       <input id="searchInput" type="text" placeholder="曲名・アーティスト" 
         class="hidden sm:block col-span-1 sm:col-span-2 rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
 <select id="sortOrder" class="hidden sm:block rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
@@ -246,43 +262,6 @@ section {
   <main id="videoList" class="max-w-4xl mx-auto px-4 py-8 divide-y divide-gray-200"> 
   </main>
 
-<!-- モーダル本体 -->
-<div id="filterModal" class="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center hidden">
-  <div class="bg-white w-11/12 max-w-md p-4 rounded-lg shadow-lg">
-    <h2 class="text-lg font-bold mb-4">絞り込み</h2>
-    
-    <!-- モーダル用のフィルター入力欄 -->
-    <div class="space-y-3">
-        <select id="modalSortOrder" class="w-full border p-2 rounded">
-    <option value="desc">新しい順</option>
-    <option value="asc">古い順</option>
-    <option value="title">曲名順</option>
-    <option value="artist">アーティスト順</option>
-  </select>
-      <select id="modalCategoryFilter" class="w-full border p-2 rounded">
-        <option value="">カテゴリ</option>
-      </select>
-      <select id="modalDateFilter" class="w-full border p-2 rounded">
-        <option value="">公開日</option>
-      </select>
-      <select id="modalTypeFilter" class="w-full border p-2 rounded">
-        <option value="">動画種別</option>
-      </select>
-      <select id="modalRoleFilter" class="w-full border p-2 rounded">
-        <option value="">担当区分</option>
-      </select>
-      <input id="modalSearchInput" type="text" placeholder="曲名・アーティスト" class="w-full border p-2 rounded" />
-    </div>
-
-    <!-- モーダル操作 -->
-    <div class="mt-4 flex justify-between">
-      <button id="applyFilters" class="bg-blue-500 text-white px-4 py-2 rounded-md">適用</button>
-      <button id="closeFilterModal" class="text-gray-600 hover:text-black px-4 py-2">キャンセル</button>
-    </div>
-  </div>
-</div>
-
-
   <footer class="text-center text-xs text-gray-500 mt-12 px-4 pb-64 space-y-2">
   <p>本サイトはファンによる非公式ページです。</p>
   <p>このサイトは <a href="https://pages.github.com/" class="underline" target="_blank" rel="noopener" >GitHub Pages</a> を利用して公開しています。</p>
@@ -296,7 +275,7 @@ section {
 
 <p class="mt-6">歌枠のタイムスタンプや曲情報をコメントで掲載してくれている皆さまに感謝。</p>
 
- <p>最終更新日：2025/08/2</p>
+ <p>最終更新日：2025/08/16</p>
 </footer>
  
 <!-- 再生中の曲名とボタンを一つの箱に入れる -->
@@ -309,6 +288,10 @@ section {
     <button id="prevVideoBtn" class="bg-gray-300 px-3 py-1 rounded">◀ 戻る</button>
     <button id="nextVideoBtn" class="bg-gray-300 px-3 py-1 rounded">▶ 次へ</button>
     <button id="randomFromFilteredBtn" class="bg-gray-300 px-3 py-1 rounded">🎲 ランダム</button>
+    <label id="autoNextUI" class="flex items-center gap-1 text-sm ml-3 select-none">
+    <input type="checkbox" id="autoNextToggle" class="w-4 h-4">
+    連続再生
+  </label>
   </div>
 </div>
 
@@ -316,68 +299,92 @@ section {
 <div id="fixedPlayer" class="fixed bottom-0 left-0 w-full bg-white border-t shadow-lg z-20">
   <div class="max-w-4xl mx-auto p-4 relative">
     <button id="closePlayerBtn" class="absolute top-0 right-0 p-2 text-gray-700 hover:text-blue-600 font-bold">✖</button>
-　　　<div id="playerResizeHandle" aria-label="プレイヤーサイズ調整ハンドル"></div>
+    <div id="playerResizeHandle" aria-label="プレイヤーサイズ調整ハンドル"></div>
 
     <div id="playerFrameWrapper" class="bg-black rounded-xl overflow-hidden shadow-lg">
-      <iframe id="playerIframe" class="w-full aspect-video" ...></iframe>
+      <iframe id="playerIframe"
+        class="w-full aspect-video"
+        loading="lazy"
+        src=""
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen title="動画プレイヤー"></iframe>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-  <template id="videoPlayerTemplate">
-    <div class="video-player-container w-full mt-4 fade-in">
-      <div class="bg-black rounded-xl overflow-hidden shadow-lg">
-    <iframe class="" src="" frameborder="0" allow="autoplay" allowfullscreen></iframe>    
-    </div>
-  </template>
-
-
-
-  
   
   <script>
+
+    const fixedPlayerEl = document.getElementById('fixedPlayer');
+    const playerIframe = document.getElementById('playerIframe');
+    const playerFrameWrapper = document.getElementById('playerFrameWrapper');
+    const resizeHandle = document.getElementById('playerResizeHandle');
+    const closeBtn = document.getElementById('closePlayerBtn');
+    const searchInput = document.getElementById('searchInput');
+    const sortOrder = document.getElementById('sortOrder');
+    const resetButton = document.getElementById('resetFilters');
+    const videoList = document.getElementById('videoList');
+    const SHOW_AUTONEXT_UI = false;
+
+    const autoNextUI = document.getElementById('autoNextUI');
+if (!SHOW_AUTONEXT_UI && autoNextUI) {
+  autoNextUI.style.display = 'none';
+}
     
     const sheetJsonUrl = 'https://opensheet.elk.sh/1sZGH3TGYdC5UShrIEFEe2T8-axXEFet6qsxbqCoHX5o/%E3%82%B7%E3%83%BC%E3%83%881';
     let allVideos = [];
     let currentFilteredVideos = [];
     let nowPlayingKey = null;
 
-    window.addEventListener('DOMContentLoaded', () => {
+    const AUTO_NEXT_KEY = 'autoNextEnabled';
+    function isAutoNextEnabled() {
+      return localStorage.getItem(AUTO_NEXT_KEY) === '1';
+    }
+    function setAutoNextEnabled(on) {
+      localStorage.setItem(AUTO_NEXT_KEY, on ? '1' : '0');
+    }
+
+    let ytPlayer = null;
+let ytApiReady = false;
+
+// YouTube IFrame API の準備完了コールバック
+window.onYouTubeIframeAPIReady = () => {
+  ytApiReady = true;
+  tryInitYtPlayer();
+};
+
+// 既存の iframe(id="playerIframe") を YT.Player 化
+function tryInitYtPlayer() {
+  if (!ytApiReady) return;
+  if (ytPlayer) return;
+  const iframeEl = document.getElementById('playerIframe');
+  if (!iframeEl) return;
+
+  ytPlayer = new YT.Player('playerIframe', {
+    playerVars: {
+    playsinline: 1,      // iOSでインライン再生
+    rel: 0,              // 終了後の関連動画を抑制
+    modestbranding: 1    // YouTubeロゴ控えめ
+  },
+    events: {
+      onStateChange: (e) => {
+        // 再生終了
+        if (e.data === YT.PlayerState.ENDED && isAutoNextEnabled()) {
+          playAdjacentVideo(1);
+        }
+      }
+    }
+  });
+}
+
+    
       fetch(sheetJsonUrl)
-        .then(response => response.json())
-        .then(data => {
-          allVideos = data;
-          populateFilters(data);
-          applyFilters();
-        })});
-
-    // モバイル用フィルターモーダル制御
-document.getElementById('openFilterModal').addEventListener('click', () => {
-  document.getElementById('filterModal').classList.remove('hidden');
-});
-
-document.getElementById('closeFilterModal').addEventListener('click', () => {
-  document.getElementById('filterModal').classList.add('hidden');
-});
-
-document.getElementById('applyFilters').addEventListener('click', () => {
-  // モーダルから値を取得して本体に反映
-  categoryFilter.value = document.getElementById('modalCategoryFilter').value;
-  dateFilter.value = document.getElementById('modalDateFilter').value;
-  typeFilter.value = document.getElementById('modalTypeFilter').value;
-  roleFilter.value = document.getElementById('modalRoleFilter').value;
-searchInput.value = document.getElementById('modalSearchInput').value;
-sortOrder.value = document.getElementById('modalSortOrder').value;
-
-  applyFilters();
-  document.getElementById('filterModal').classList.add('hidden');
-});
-
+   .then(r => r.json())
+   .then(data => {
+     allVideos = data;
+     initFilterBar();         // ← チェックボックスを生成
+     applyFilters();          // ← 表示
+     requestAnimationFrame(adjustFixedPlayerBottom);
+   });
 
   const randomPlayButton = document.getElementById('randomPlayButton');
     randomPlayButton.addEventListener('click', () => {
@@ -386,54 +393,83 @@ sortOrder.value = document.getElementById('modalSortOrder').value;
     loadVideo(randomVideo, null);
 });
 
-
-      const categoryFilter = document.getElementById('categoryFilter');
-      const dateFilter = document.getElementById('dateFilter');
-      const typeFilter = document.getElementById('typeFilter');
-      const roleFilter = document.getElementById('roleFilter');
-      const searchInput = document.getElementById('searchInput');
-      const sortOrder = document.getElementById('sortOrder');
-      const resetButton = document.getElementById('resetFilters');
-      const videoList = document.getElementById('videoList');
-      const videoPlayerTemplate = document.getElementById('videoPlayerTemplate');
+    // 連続再生トグルの初期化
+const autoNextToggle = document.getElementById('autoNextToggle');
+if (autoNextToggle) {
+  autoNextToggle.checked = isAutoNextEnabled();
+  autoNextToggle.addEventListener('change', (e) => {
+    setAutoNextEnabled(e.target.checked);
+  });
+}
 
     // === 固定プレイヤーと NowPlaying の重なり対策 ===
 function adjustFixedPlayerBottom() {
-  const fixedPlayerEl = document.getElementById('fixedPlayer');
   const nowPlayingWrapperEl = document.getElementById('nowPlayingWrapper');
-  if (!fixedPlayerEl || !nowPlayingWrapperEl) return;
+  if (!fixedPlayerEl || !nowPlayingWrapperEl || !playerIframe) return; 
+
   const h = nowPlayingWrapperEl.offsetHeight || 0;
   fixedPlayerEl.style.bottom = `${h + 8}px`;
   const total = (fixedPlayerEl.offsetHeight || 0) + h + 12;
   document.body.style.paddingBottom = `${total}px`;
-}
-window.addEventListener('resize', adjustFixedPlayerBottom);
-if (window.ResizeObserver) {
-  const np = document.getElementById('nowPlayingWrapper');
-  if (np) new ResizeObserver(adjustFixedPlayerBottom).observe(np);
+
+  const maxH = getMaxPlayerHeight();
+  const current = parseInt(playerIframe.style.height || 0, 10) ||
+                  playerIframe.getBoundingClientRect().height;
+  if (current > maxH) setPlayerHeight(maxH);
 }
 
+window.addEventListener('resize', () => {
+  requestAnimationFrame(adjustFixedPlayerBottom);
+});
+window.addEventListener('orientationchange', () => {
+  setTimeout(adjustFixedPlayerBottom, 50);
+});
+window.visualViewport?.addEventListener('resize', adjustFixedPlayerBottom);
+
+
 // === リサイズ（高さ可変）関連 ===
-const playerFrameWrapper = document.getElementById('playerFrameWrapper');
-const playerIframe = document.getElementById('playerIframe');
-const resizeHandle = document.getElementById('playerResizeHandle');
 
 const PLAYER_HEIGHT_KEY = 'playerHeightPx';
 const MIN_PLAYER_H = 240;
-const MAX_PLAYER_H = 900;
 
 function applyStoredPlayerHeight() {
   const stored = parseInt(localStorage.getItem(PLAYER_HEIGHT_KEY) || '', 10);
-  if (!isNaN(stored) && stored >= MIN_PLAYER_H && stored <= MAX_PLAYER_H) {
+  if (!isNaN(stored)) {
+    const maxH = getMaxPlayerHeight();
+    const clamped = Math.max(MIN_PLAYER_H, Math.min(stored, maxH));
     playerIframe.classList.remove('aspect-video');
-    playerIframe.style.height = stored + 'px';
-    if (playerFrameWrapper) playerFrameWrapper.style.height = stored + 'px';
+    playerIframe.style.height = clamped + 'px';
+    if (playerFrameWrapper) playerFrameWrapper.style.height = clamped + 'px';
   }
   adjustFixedPlayerBottom();
 }
 
+// 画面からはみ出さない最大高さを計算（ハンドルが見えるように上部に余白を確保）
+function getMaxPlayerHeight() {
+  const vh = window.innerHeight;
+
+  // fixedPlayer の bottom は NowPlaying 高さ + 8px
+  const nowH = document.getElementById('nowPlayingWrapper')?.offsetHeight || 0;
+  const bottomOffset = nowH + 8;
+
+  // 内側の p-4（上下16pxずつ）＝合計32px（Tailwind）
+  const fixedPlayerVerticalPadding = 16 * 2;
+
+  // ハンドル分の出っ張り + 余白（見やすさのために少し多め）
+  const handleAndTopSafety = 24 + 16; // だいたい 40px
+
+  // 画面高さから下マージン・パディング・上の安全余白を引いた値が上限
+  const maxH = vh - (bottomOffset + fixedPlayerVerticalPadding + handleAndTopSafety);
+
+  // 最低でも MIN_PLAYER_H 以上、かつ負にならないように
+  return Math.max(MIN_PLAYER_H, Math.floor(maxH));
+}
+
+
 function setPlayerHeight(px) {
-  const h = Math.max(MIN_PLAYER_H, Math.min(MAX_PLAYER_H, Math.round(px)));
+  const maxH = getMaxPlayerHeight();        // ← 画面からはみ出さない上限
+  const h = Math.max(MIN_PLAYER_H, Math.min(Math.round(px), maxH));
+
   playerIframe.classList.remove('aspect-video');
   playerIframe.style.height = h + 'px';
   if (playerFrameWrapper) playerFrameWrapper.style.height = h + 'px';
@@ -441,28 +477,51 @@ function setPlayerHeight(px) {
   adjustFixedPlayerBottom();
 }
 
+
 (function enablePlayerResize() {
   if (!resizeHandle || !playerIframe) return;
+
   let dragging = false, startY = 0, startH = 0;
+  let prevUserSelect = '', prevCursor = '', prevOverflow = '';
+  const preventScroll = (e) => e.preventDefault();
+
+  const lockScroll = () => {
+    // スクロール抑止（iOS含む）
+    prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    // タッチスクロールを完全停止
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+  };
+
+  const unlockScroll = () => {
+    document.body.style.overflow = prevOverflow;
+    document.removeEventListener('touchmove', preventScroll, { passive: false });
+  };
 
   const start = (y) => {
     dragging = true;
     startY = y;
     startH = parseInt(playerIframe.style.height || 0, 10) ||
              playerIframe.getBoundingClientRect().height;
+    prevUserSelect = document.body.style.userSelect;
+    prevCursor = document.body.style.cursor;
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'ns-resize';
+    lockScroll();
   };
+
   const move = (y) => {
     if (!dragging) return;
     const dy = y - startY;
     setPlayerHeight(startH - dy); // 上に動かすと高さが増える
   };
+
   const end = () => {
     if (!dragging) return;
     dragging = false;
-    document.body.style.userSelect = '';
-    document.body.style.cursor = '';
+    document.body.style.userSelect = prevUserSelect;
+    document.body.style.cursor = prevCursor;
+    unlockScroll();
   };
 
   // マウス
@@ -473,128 +532,18 @@ function setPlayerHeight(px) {
   window.addEventListener('mousemove', (e) => move(e.clientY));
   window.addEventListener('mouseup', end);
 
-  // タッチ
+  // タッチ（passive: false で preventDefault を有効に）
   resizeHandle.addEventListener('touchstart', (e) => {
     start(e.touches[0].clientY);
-  }, { passive: true });
-  window.addEventListener('touchmove', (e) => move(e.touches[0].clientY), { passive: true });
+  }, { passive: false });
+
+  window.addEventListener('touchmove', (e) => {
+    move(e.touches[0].clientY);
+  }, { passive: false });
+
   window.addEventListener('touchend', end);
 })();
-
-      function populateFilters(videos) {
-        const sets = {
-          category: new Set(),
-          date: new Set(),
-          type: new Set(),
-          role: new Set()
-        };
-
-        videos.forEach(v => {
-          sets.category.add(v["カテゴリ"]);
-          sets.type.add(v["動画種別"]);
-          sets.role.add(v["担当区分"]);
-
-            // 公開月（例: 2023/07）だけ抽出して追加
-const rawDate = v["公開月"];
-if (typeof rawDate === "string" && /^\d{4}[-\/]\d{2}/.test(rawDate)) {
-  const month = rawDate.slice(0, 7).replace('-', '/'); // "YYYY/MM"
-  sets.date.add(month);
-}
-        });
-
-        addOptions(categoryFilter, [...sets.category].sort());
-        addOptions(dateFilter, [...sets.date].sort());
-        addOptions(typeFilter, [...sets.type].sort());
-        addOptions(roleFilter, [...sets.role].sort());
-
-
-// モーダル用にも同じく追加
-addOptions(document.getElementById('modalCategoryFilter'), [...sets.category].sort());
-addOptions(document.getElementById('modalDateFilter'), [...sets.date].sort());
-addOptions(document.getElementById('modalTypeFilter'), [...sets.type].sort());
-addOptions(document.getElementById('modalRoleFilter'), [...sets.role].sort());
-
-        // モバイル用ランダム再生ボタン
-const mobileRandomPlayButton = document.getElementById('mobileRandomPlayButton');
-if (mobileRandomPlayButton) {
-  mobileRandomPlayButton.addEventListener('click', () => {
-    const list = currentFilteredVideos?.length ? currentFilteredVideos : allVideos;
-    const randomVideo = list[Math.floor(Math.random() * list.length)];
-    loadVideo(randomVideo, null);
-  });
-}
-
-
-
-
-        [categoryFilter, dateFilter, typeFilter, roleFilter, searchInput, sortOrder].forEach(el => {
-          el.addEventListener('change', applyFilters);
-          el.addEventListener('input', applyFilters);
-        });
-
-        resetButton.addEventListener('click', () => {
-          categoryFilter.value = "";
-          dateFilter.value = "";
-          typeFilter.value = "";
-          roleFilter.value = "";
-          searchInput.value = "";
-          sortOrder.value = "desc";
-          applyFilters();
-        });
-      }
-
-      function addOptions(select, values) {
-        values.forEach(v => {
-          if (!v) return;
-          const option = document.createElement('option');
-          option.value = v;
-          option.textContent = v;
-          select.appendChild(option);
-        });
-      }
-
-      function applyFilters() {
-        let filtered = allVideos.filter(video => {
-          return (!categoryFilter.value || video["カテゴリ"] === categoryFilter.value) &&
-                 (!dateFilter.value || (
-  typeof video["公開月"] === "string" &&
-  video["公開月"].slice(0, 7).replace('-', '/') === dateFilter.value
-))
- &&
-                 (!typeFilter.value || video["動画種別"] === typeFilter.value) &&
-                 (!roleFilter.value || video["担当区分"] === roleFilter.value) &&
-                 (!searchInput.value ||
-                  video["title"].toLowerCase().includes(searchInput.value.toLowerCase()) ||
-                  video["artist"].toLowerCase().includes(searchInput.value.toLowerCase()));
-        });
-
-const coll = new Intl.Collator('ja');
-
-filtered.sort((a, b) => {
-  const order = sortOrder.value;
-
-  if (order === "asc" || order === "desc") {
-    const dateA = Date.parse(
-      typeof a["公開月"] === "string" ? a["公開月"].replace('/', '-') + "-01" : ""
-    ) || 0;
-    const dateB = Date.parse(
-      typeof b["公開月"] === "string" ? b["公開月"].replace('/', '-') + "-01" : ""
-    ) || 0;
-    return order === "asc" ? dateA - dateB : dateB - dateA;
-  } else if (order === "title") {
-    return coll.compare(String(a["title"] || ""), String(b["title"] || ""));
-  } else if (order === "artist") {
-    return coll.compare(String(a["artist"] || ""), String(b["artist"] || ""));
-  } else {
-    return 0;
-  }
-});
-
-
-        renderVideoList(filtered);
-        currentFilteredVideos = filtered;
-      }
-
+    
 function renderVideoList(videos) {
   videoList.innerHTML = '';
 
@@ -665,82 +614,89 @@ function renderVideoList(videos) {
   }
 }
 
-
-
+    
 function loadVideo(video, item) {
   const start = parseInt(video["start"] || '0', 10);
   let videoId = video["videoId"];
-  let platform = video["platform"];
-  let embedUrl = ""; // ← 追加（重要）
+  let platform = (video["platform"] || "").toLowerCase();
 
   if (!videoId) {
     alert("videoId が指定されていません");
     return;
   }
-
-  if (typeof platform !== "string" || platform.trim() === "") {
+  if (!platform) {
     alert("platform が未指定のため再生できません");
     return;
   }
-  platform = platform.toLowerCase();
 
   if (platform.includes("youtube")) {
     const match = videoId.match(/(?:v=|\/|youtu\.be\/)?([0-9A-Za-z_-]{11})/);
     if (match) videoId = match[1];
-    embedUrl = `https://www.youtube.com/embed/${videoId}?start=${start}&autoplay=1&enablejsapi=1`;
+
+    // IFrame API 優先
+    if (ytApiReady) {
+      tryInitYtPlayer(); // 未初期化なら初期化
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        const wasHidden = fixedPlayerEl.style.display === 'none';
+        fixedPlayerEl.style.display = 'block';
+        ytPlayer.loadVideoById({ videoId, startSeconds: start });
+        if (wasHidden) applyStoredPlayerHeight();
+      } else {
+        // フォールバック：直URL
+        playerIframe.src =
+          `https://www.youtube.com/embed/${videoId}?start=${start}&autoplay=1&enablejsapi=1&playsinline=1`;
+        fixedPlayerEl.style.display = 'block';
+        applyStoredPlayerHeight();
+      }
+    } else {
+      // API未準備：直URL
+      playerIframe.src =
+        `https://www.youtube.com/embed/${videoId}?start=${start}&autoplay=1&enablejsapi=1&playsinline=1`;
+      fixedPlayerEl.style.display = 'block';
+      applyStoredPlayerHeight();
+    }
+
   } else if (platform === "tiktok") {
+    // TikTok は従来どおり src を差し替え
     const match = videoId.match(/video\/(\d+)/);
     const tiktokId = match ? match[1] : videoId;
-    embedUrl = `https://www.tiktok.com/embed/v2/${tiktokId}`;
+    playerIframe.src = `https://www.tiktok.com/embed/v2/${tiktokId}`;
+    fixedPlayerEl.style.display = 'block';
+    applyStoredPlayerHeight();
+
   } else {
     alert(`未対応の platform: ${platform}`);
     return;
   }
 
-  // 固定プレイヤーに動画を設定
-  const fixedPlayer = document.getElementById('fixedPlayer');
-  const iframe = document.getElementById('playerIframe');
-  iframe.src = embedUrl;
-  fixedPlayer.style.display = 'block';
-
-  // 高さ（px）を適用（aspect-video 切替は不要）
-  applyStoredPlayerHeight(); // 保存済み高さがあれば適用
-  if (!playerIframe.style.height) {
-    const defaultH = window.innerWidth < 640 ? 360 : 540;
-    setPlayerHeight(defaultH);
-  }
-
-  // 再生中の曲名・ハイライト更新（← 条件分岐の外に出す）
+  // 再生中の曲名・ハイライト更新
   const nowPlayingTitle = document.getElementById('nowPlayingTitle');
   nowPlayingTitle.textContent = `${video["title"]} - ${video["artist"]}`;
   nowPlayingKey = `${video["videoId"]}__${start}`;
-  applyFilters(); // 再描画してハイライト＆スクロール反映
+  applyFilters(); // ハイライト＆スクロール反映
 }
-
-
-    const closeBtn = document.getElementById('closePlayerBtn');
-const fixedPlayer = document.getElementById('fixedPlayer');
-const iframe = document.getElementById('playerIframe');
 
 if (closeBtn) {
   closeBtn.addEventListener('click', () => {
     document.body.style.paddingBottom =
-  `${(document.getElementById('nowPlayingWrapper')?.offsetHeight || 0) + 12}px`;
+      `${(document.getElementById('nowPlayingWrapper')?.offsetHeight || 0) + 12}px`;
 
-    // YouTube の場合は pauseVideo
-    if (iframe.src.includes("youtube.com")) {
-      iframe.contentWindow?.postMessage(JSON.stringify({
+    if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+      ytPlayer.stopVideo();
+    } else if (playerIframe?.src.includes("youtube.com")) {
+      playerIframe.contentWindow?.postMessage(JSON.stringify({
         event: 'command',
         func: 'pauseVideo',
         args: []
       }), '*');
     } else {
-      // TikTok などは src をクリアして停止
-      iframe.src = "";
+      playerIframe.src = "";
     }
-    fixedPlayer.style.display = 'none';
+    fixedPlayerEl.style.display = 'none';
   });
 }
+
+
 
 
   // 古い埋め込みプレイヤーを削除（固定プレイヤーを使うので他のプレイヤーは削除）
@@ -772,6 +728,147 @@ function playAdjacentVideo(direction) {
     loadVideo(currentFilteredVideos[newIndex], null);
     }
     }
+
+// ====== フィルター設定（シートのヘッダー名に対応） ======
+const KEY = {
+  category: "カテゴリ",
+  month: "公開月",        // 例: "2025-08" など
+  videoType: "動画種別",
+  role: "担当区分",
+};
+
+// "2025-08" / "2025/08" / "2025-08-21" → "2025/08"
+function monthYM(v){
+  if(!v) return "";
+  const s = String(v).slice(0,7).replace('-', '/');
+  return /^\d{4}\/\d{2}$/.test(s) ? s : "";
+}
+
+// 重複なし配列
+function uniqueValues(arr, getter){
+  const s = new Set();
+  arr.forEach(it => s.add(getter(it) || ""));
+  s.delete("");
+  return [...s];
+}
+
+// チェックボックス群を描画
+function renderCheckboxes(groupKey, values, container){
+  container.innerHTML = values.map(val => {
+    const id = `${groupKey}-${val}`.replace(/\W+/g, "_");
+    return `
+      <label for="${id}" class="flex items-center gap-2 text-sm">
+        <input id="${id}" type="checkbox" value="${val}" data-group="${groupKey}" class="accent-black">
+        <span>${val}</span>
+      </label>
+    `;
+  }).join("");
+}
+
+// 選択値取得
+function getSelected(groupKey){
+  return [...document.querySelectorAll(`input[type="checkbox"][data-group="${groupKey}"]:checked`)]
+    .map(cb => cb.value);
+}
+
+// 検索対象キー
+const SEARCH_KEYS = ["title", "artist"];
+
+// テキスト一致
+function matchText(it, q){
+  if(!q) return true;
+  const needle = q.trim().toLowerCase();
+  if(!needle) return true;
+  return SEARCH_KEYS.some(k => String(it[k] ?? "").toLowerCase().includes(needle));
+}
+
+// 並び替え
+function sortList(list, order){
+  const copy = [...list];
+  const coll = new Intl.Collator('ja');
+  if (order === "asc" || order === "desc") {
+    copy.sort((a, b) => {
+      const aD = Date.parse((a[KEY.month] ? String(a[KEY.month]).slice(0,7).replace('/', '-') : "") + "-01") || 0;
+      const bD = Date.parse((b[KEY.month] ? String(b[KEY.month]).slice(0,7).replace('/', '-') : "") + "-01") || 0;
+      return order === "asc" ? aD - bD : bD - aD;
+    });
+  } else if (order === "title") {
+    copy.sort((a,b) => coll.compare(String(a.title || ""), String(b.title || "")));
+  } else if (order === "artist") {
+    copy.sort((a,b) => coll.compare(String(a.artist || ""), String(b.artist || "")));
+  }
+  return copy;
+}
+
+// 描画（既存のレンダラへ橋渡し）
+function render(list){
+  renderVideoList(list);
+  currentFilteredVideos = list;
+  const countElement = document.getElementById('songCount');
+  if (countElement) countElement.textContent = `${allVideos.length}曲中 ${list.length}曲表示中`;
+}
+
+// フィルタ本体：チェック → 検索 → ソート → render
+function applyFilters(){
+  const selected = {
+    category: getSelected("category"),
+    month:    getSelected("month"),
+    videoType:getSelected("videoType"),
+    role:     getSelected("role"),
+  };
+  const q = document.getElementById('searchInput')?.value || "";
+  const order = document.getElementById('sortOrder')?.value || "desc";
+
+  // 1) チェックボックス
+  let filtered = allVideos.filter(it => {
+    const ym = monthYM(it[KEY.month]); // "YYYY/MM"
+    const c1 = !selected.category.length || selected.category.includes(it[KEY.category]);
+    const c2 = !selected.month.length    || selected.month.includes(ym);
+    const c3 = !selected.videoType.length|| selected.videoType.includes(it[KEY.videoType]);
+    const c4 = !selected.role.length     || selected.role.includes(it[KEY.role]);
+    return c1 && c2 && c3 && c4;
+  });
+
+  // 2) 検索
+  filtered = filtered.filter(it => matchText(it, q));
+
+  // 3) ソート
+  filtered = sortList(filtered, order);
+
+  // 4) 描画
+  render(filtered);
+}
+
+// 初期化：チェックボックス生成＋イベント接続
+function initFilterBar(){
+  // 値一覧をデータから自動抽出
+  const cats  = uniqueValues(allVideos, it => it[KEY.category]).sort();
+  const mons  = uniqueValues(allVideos, it => monthYM(it[KEY.month])).sort().reverse();
+  const vts   = uniqueValues(allVideos, it => it[KEY.videoType]).sort();
+  const roles = uniqueValues(allVideos, it => it[KEY.role]).sort();
+
+  renderCheckboxes("category", cats,  document.querySelector('[data-group="category"]'));
+  renderCheckboxes("month",    mons,  document.querySelector('[data-group="month"]'));
+  renderCheckboxes("videoType",vts,   document.querySelector('[data-group="videoType"]'));
+  renderCheckboxes("role",     roles, document.querySelector('[data-group="role"]'));
+
+  // 即時反映
+  document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', applyFilters);
+  });
+
+  // 検索・ソート
+  document.getElementById('searchInput')?.addEventListener('input', applyFilters);
+  document.getElementById('sortOrder')?.addEventListener('change', applyFilters);
+
+  // リセット
+  document.getElementById('resetFilters')?.addEventListener('click', () => {
+    document.querySelectorAll('#filters input[type="checkbox"]').forEach(cb => cb.checked = false);
+    const s = document.getElementById('searchInput'); if (s) s.value = "";
+    const so = document.getElementById('sortOrder');  if (so) so.value = "desc";
+    applyFilters();
+  });
+}
 
   </script>
 </body>
