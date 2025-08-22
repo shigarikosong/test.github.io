@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>しがりこのうたs。｜司賀りこ非公式ファンサイト</title>
+  <title>しがりこのうたss。｜司賀りこ非公式ファンサイト</title>
   <link rel="icon" type="image/svg+xml" href="/icon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -213,30 +213,52 @@ section {
 </div>
 
  <div id="filters" class="grid md:grid-cols-4 gap-3">
-   <!-- カテゴリ -->
-   <fieldset class="bg-white rounded-lg border p-3">
-     <legend class="text-sm font-medium mb-2">カテゴリ</legend>
-     <div class="space-y-1" data-group="category"></div>
-   </fieldset>
+  <!-- 汎用：開閉式パネル -->
+  <div class="filter-panel bg-white rounded-lg border">
+    <button type="button" class="filter-toggle w-full flex items-center justify-between px-3 py-2"
+            aria-expanded="false">
+      <span class="text-sm font-medium">カテゴリ</span>
+      <span class="chevron transition-transform">▾</span>
+    </button>
+    <div class="filter-content px-3 pb-3 hidden">
+      <div class="space-y-1" data-group="category"></div>
+    </div>
+  </div>
 
-   <!-- 公開月 -->
-   <fieldset class="bg-white rounded-lg border p-3">
-     <legend class="text-sm font-medium mb-2">公開日</legend>
-     <div class="space-y-1" data-group="month"></div>
-   </fieldset>
+  <div class="filter-panel bg-white rounded-lg border">
+    <button type="button" class="filter-toggle w-full flex items-center justify-between px-3 py-2"
+            aria-expanded="false">
+      <span class="text-sm font-medium">公開日</span>
+      <span class="chevron transition-transform">▾</span>
+    </button>
+    <div class="filter-content px-3 pb-3 hidden">
+      <div class="space-y-1" data-group="month"></div>
+    </div>
+  </div>
 
-   <!-- 動画種別 -->
-   <fieldset class="bg-white rounded-lg border p-3">
-     <legend class="text-sm font-medium mb-2">動画種別</legend>
-     <div class="space-y-1" data-group="videoType"></div>
-   </fieldset>
+  <div class="filter-panel bg-white rounded-lg border">
+    <button type="button" class="filter-toggle w-full flex items-center justify-between px-3 py-2"
+            aria-expanded="false">
+      <span class="text-sm font-medium">動画種別</span>
+      <span class="chevron transition-transform">▾</span>
+    </button>
+    <div class="filter-content px-3 pb-3 hidden">
+      <div class="space-y-1" data-group="videoType"></div>
+    </div>
+  </div>
 
-   <!-- 担当区分 -->
-   <fieldset class="bg-white rounded-lg border p-3">
-     <legend class="text-sm font-medium mb-2">担当区分</legend>
-     <div class="space-y-1" data-group="role"></div>
-   </fieldset>
- </div>
+  <div class="filter-panel bg-white rounded-lg border">
+    <button type="button" class="filter-toggle w-full flex items-center justify-between px-3 py-2"
+            aria-expanded="false">
+      <span class="text-sm font-medium">担当区分</span>
+      <span class="chevron transition-transform">▾</span>
+    </button>
+    <div class="filter-content px-3 pb-3 hidden">
+      <div class="space-y-1" data-group="role"></div>
+    </div>
+  </div>
+</div>
+
     
       <input id="searchInput" type="text" placeholder="曲名・アーティスト" 
         class="hidden sm:block col-span-1 sm:col-span-2 rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-blue-300 transition duration-200">
@@ -869,6 +891,38 @@ function initFilterBar(){
     applyFilters();
   });
 }
+
+    function setupFilterDisclosure(root = document) {
+  root.querySelectorAll('.filter-panel').forEach(panel => {
+    const btn = panel.querySelector('.filter-toggle');
+    const content = panel.querySelector('.filter-content');
+    const chevron = panel.querySelector('.chevron');
+
+    const setOpen = (open) => {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        content.classList.remove('hidden');
+        chevron?.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        chevron?.classList.remove('rotate-180');
+      }
+    };
+
+    // 初期は閉じる
+    setOpen(false);
+
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      setOpen(!isOpen);
+    });
+  });
+}
+
+// フィルター描画が終わってから呼ぶ
+// （initFilterBar() の最後、または allVideos 読み込み後の applyFilters() の直後など）
+setupFilterDisclosure(document);
+
 
   </script>
 </body>
